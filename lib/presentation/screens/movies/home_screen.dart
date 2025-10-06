@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cinema_app_03/config/constants/environment.dart';
 
 class HomeScreen extends StatelessWidget {
   static const String name = 'home_screen';
@@ -19,6 +20,8 @@ class HomeScreen extends StatelessWidget {
       ),
       body: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text('Home Screen', style: theme.textTheme.headlineLarge),
             ElevatedButton(
@@ -27,6 +30,7 @@ class HomeScreen extends StatelessWidget {
               },
               child: const Text('Movie'),
             ),
+            Text(Environment.movieDbApiKey),
           ],
         ),
       ),
