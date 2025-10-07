@@ -8,6 +8,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
+      title: 'Cinema App',
       routerConfig: appRouter,
       debugShowCheckedModeBanner: false,
       theme: AppTheme().getTheme(),

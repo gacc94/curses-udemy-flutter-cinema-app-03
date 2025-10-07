@@ -1,6 +1,7 @@
-import 'package:cinema_app_03/presentation/providers/movies/movie_providers.dart';
+import 'package:cinema_app_03/presentation/providers/providers.dart';
+import 'package:cinema_app_03/presentation/widgets/movies/movie_horizontal_list.dart.dart';
+import 'package:cinema_app_03/presentation/widgets/widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:cinema_app_03/config/constants/environment.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -10,33 +11,9 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     return Scaffold(
-      drawer: const Drawer(child: Center(child: Text('Drawer'))),
-      appBar: AppBar(
-        title: const Text(
-          'Cinema App',
-          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-        ),
-        backgroundColor: theme.colorScheme.primary,
-      ),
       body: _HomeView(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: const Icon(Icons.dark_mode_outlined),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: (value) {},
-        currentIndex: 0,
-        backgroundColor: theme.colorScheme.primary,
-        selectedItemColor: theme.colorScheme.onPrimary,
-        unselectedItemColor: theme.colorScheme.onPrimary.withValues(alpha: 0.5),
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
-        ],
-      ),
+      bottomNavigationBar: const CustomBottomNavigationBarDart(),
     );
   }
 }
@@ -58,17 +35,54 @@ class _HomeViewState extends ConsumerState<_HomeView> {
   @override
   Widget build(BuildContext context) {
     final nowPlayingMovies = ref.watch(nowPlayingMoviesProvider);
-    return ListView.builder(
-      itemCount: nowPlayingMovies.length,
-      itemBuilder: (context, index) {
-        final movie = nowPlayingMovies[index];
-        return Card(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-            child: Text(movie.title),
-          ),
-        );
-      },
-    );
+    final slides = ref.watch(moviesSlideShowProvider);
+
+    return slides.isNotEmpty
+        ? CustomScrollView(
+            physics: const ClampingScrollPhysics(),
+            slivers: [
+              SliverAppBar(
+                floating: true,
+                flexibleSpace: FlexibleSpaceBar(
+                  background: Container(
+                    alignment: Alignment.center,
+                    child: const CustomAppBar(),
+                  ),
+                ),
+              ),
+              SliverList(
+                delegate: SliverChildBuilderDelegate((context, index) {
+                  return Column(
+                    children: [
+                      MoviesSlideShow(movies: slides),
+
+                      MovieHorizontalList(
+                        movies: nowPlayingMovies,
+                        title: 'En Cines',
+                        subtitle: 'Estrenos',
+                        loadNextPage: () => {
+                          ref
+                              .read(nowPlayingMoviesProvider.notifier)
+                              .loadNextPage(),
+                        },
+                      ),
+
+                      MovieHorizontalList(
+                        movies: nowPlayingMovies,
+                        title: 'Populares',
+                        subtitle: 'Populares',
+                        loadNextPage: () => {
+                          ref
+                              .read(nowPlayingMoviesProvider.notifier)
+                              .loadNextPage(),
+                        },
+                      ),
+                    ],
+                  );
+                }, childCount: 1),
+              ),
+            ],
+          )
+        : const Center(child: CircularProgressIndicator());
   }
 }

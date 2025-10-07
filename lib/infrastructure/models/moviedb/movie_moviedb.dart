@@ -41,12 +41,25 @@ class MovieMovieDB {
     overview: json['overview'] ?? '',
     popularity: json['popularity']?.toDouble() ?? 0,
     posterPath: json['poster_path'] ?? '',
-    releaseDate: DateTime.parse(json['release_date']),
+    releaseDate: _parseReleaseDate(json['release_date']),
     title: json['title'],
     video: json['video'],
     voteAverage: json['vote_average']?.toDouble() ?? 0,
     voteCount: json['vote_count'],
   );
+
+  static DateTime _parseReleaseDate(String? releaseDateStr) {
+    if (releaseDateStr == null || releaseDateStr.isEmpty) {
+      return DateTime.now(); // Fallback to current date if no release date
+    }
+
+    try {
+      return DateTime.parse(releaseDateStr);
+    } catch (e) {
+      // If parsing fails, return current date as fallback
+      return DateTime.now();
+    }
+  }
 
   Map<String, dynamic> toJson() => {
     'adult': adult,
