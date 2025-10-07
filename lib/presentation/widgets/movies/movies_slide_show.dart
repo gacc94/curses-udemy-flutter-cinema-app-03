@@ -47,11 +47,11 @@ class _Slide extends StatelessWidget {
           blurRadius: 10,
           offset: const Offset(0, 10),
         ),
-        // BoxShadow(
-        //   color: Colors.black45,
-        //   blurRadius: 10,
-        //   offset: const Offset(0, 10),
-        // ),
+        BoxShadow(
+          color: Colors.black45,
+          blurRadius: 10,
+          offset: const Offset(0, 10),
+        ),
       ],
     );
     return Padding(

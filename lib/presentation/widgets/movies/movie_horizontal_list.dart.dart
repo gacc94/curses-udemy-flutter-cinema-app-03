@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:cinema_app_03/config/helpers/human_formats.dart';
 import 'package:flutter/material.dart';
 import 'package:cinema_app_03/domain/entities/movie.dart';
@@ -60,10 +61,13 @@ class _MovieHorizontalListState extends State<MovieHorizontalList> {
               controller: _scrollController,
               scrollDirection: Axis.horizontal,
               itemCount: widget.movies.length,
-              physics: const BouncingScrollPhysics(),
+              // physics: const BouncingScrollPhysics(),
               itemBuilder: (context, index) {
                 final movie = widget.movies[index];
-                return _Slide(movie: movie);
+                return FadeInRight(
+                  duration: const Duration(milliseconds: 300),
+                  child: _Slide(movie: movie),
+                );
               },
             ),
           ),
