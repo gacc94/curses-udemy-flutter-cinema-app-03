@@ -12,4 +12,10 @@ class MovieRepositoryImpl implements MoviesRepository {
     final movies = await dataSource.getNowPlaying(page: page);
     return movies;
   }
+
+  @override
+  Future<List<Movie>> getPopular({int page = 1}) async {
+    final movies = await dataSource.getPopular(page: page);
+    return movies;
+  }
 }
