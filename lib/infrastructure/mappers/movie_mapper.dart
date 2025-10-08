@@ -44,7 +44,7 @@ class MovieMapper {
       popularity: movieDetails.popularity,
       posterPath: movieDetails.posterPath != ''
           ? 'https://image.tmdb.org/t/p/w500/${movieDetails.posterPath}.jpg'
-          : 'no-poster',
+          : 'https://images.fineartamerica.com/images/artworkimages/mediumlarge/3/do-not-go-where-the-path-may-lead-ralph-waldo-emerson-typographic-quote-poster-02-studio-grafiikka.jpg',
       releaseDate: movieDetails.releaseDate,
       title: movieDetails.title,
       video: movieDetails.video,

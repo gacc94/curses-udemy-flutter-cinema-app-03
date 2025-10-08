@@ -36,16 +36,16 @@ class MovieMovieDB {
     backdropPath: json['backdrop_path'] ?? '',
     genreIds: List<int>.from(json['genre_ids'].map((x) => x)),
     id: json['id'],
-    originalLanguage: json['original_language'],
-    originalTitle: json['original_title'],
+    originalLanguage: json['original_language'] ?? '',
+    originalTitle: json['original_title'] ?? '',
     overview: json['overview'] ?? '',
     popularity: json['popularity']?.toDouble() ?? 0,
     posterPath: json['poster_path'] ?? '',
-    releaseDate: _parseReleaseDate(json['release_date']),
-    title: json['title'],
-    video: json['video'],
+    releaseDate: _parseReleaseDate(json['release_date'] ?? ''),
+    title: json['title'] ?? '',
+    video: json['video'] ?? false,
     voteAverage: json['vote_average']?.toDouble() ?? 0,
-    voteCount: json['vote_count'],
+    voteCount: json['vote_count'] ?? 0,
   );
 
   static DateTime _parseReleaseDate(String? releaseDateStr) {

@@ -21,7 +21,10 @@ class MovieDBDataSource extends MoviesDatasource {
     final movieDbResponse = MovieDBResponse.fromJson(response.data);
 
     final List<Movie> movies = movieDbResponse.results
-        .where((movie) => movie.posterPath.isNotEmpty && movie.posterPath != 'no-poster')
+        .where(
+          (movie) =>
+              movie.posterPath.isNotEmpty && movie.posterPath != 'no-poster',
+        )
         .map((movie) => MovieMapper.toMovie(movie))
         .toList();
 
@@ -74,5 +77,15 @@ class MovieDBDataSource extends MoviesDatasource {
     final movieDetails = MovieDetails.fromJson(response.data);
 
     return MovieMapper.movieDetailToMovie(movieDetails);
+  }
+
+  @override
+  Future<List<Movie>> searchMovies(String query) async {
+    if (query.isEmpty) return [];
+    final response = await dio.get(
+      '/search/movie',
+      queryParameters: {'query': query},
+    );
+    return _jsonToMovies(response);
   }
 }
