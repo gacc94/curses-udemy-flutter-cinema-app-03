@@ -30,4 +30,10 @@ class MovieRepositoryImpl implements MoviesRepository {
     final movies = await dataSource.getTopRated(page: page);
     return movies;
   }
+
+  @override
+  Future<Movie> getMovieById(String movieId) async {
+    final movie = await dataSource.getMovieById(movieId);
+    return movie;
+  }
 }

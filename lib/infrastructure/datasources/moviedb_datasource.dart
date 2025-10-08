@@ -1,6 +1,7 @@
 import 'package:cinema_app_03/domain/datasources/movies_datasource.dart';
 import 'package:cinema_app_03/domain/entities/movie.dart';
 import 'package:cinema_app_03/infrastructure/mappers/movie_mapper.dart';
+import 'package:cinema_app_03/infrastructure/models/moviedb/movie_detail.dart';
 import 'package:cinema_app_03/infrastructure/models/moviedb/moviedb_response.dart';
 import 'package:dio/dio.dart';
 import 'package:cinema_app_03/config/constants/environment.dart';
@@ -20,7 +21,7 @@ class MovieDBDataSource extends MoviesDatasource {
     final movieDbResponse = MovieDBResponse.fromJson(response.data);
 
     final List<Movie> movies = movieDbResponse.results
-        .where((movie) => movie.posterPath != 'no-poster')
+        .where((movie) => movie.posterPath.isNotEmpty && movie.posterPath != 'no-poster')
         .map((movie) => MovieMapper.toMovie(movie))
         .toList();
 
@@ -61,5 +62,17 @@ class MovieDBDataSource extends MoviesDatasource {
       queryParameters: {'page': page},
     );
     return _jsonToMovies(response);
+  }
+
+  @override
+  Future<Movie> getMovieById(String movieId) async {
+    final response = await dio.get('/movie/$movieId');
+    if (response.statusCode != 200) {
+      throw Exception('Movie not found');
+    }
+
+    final movieDetails = MovieDetails.fromJson(response.data);
+
+    return MovieMapper.movieDetailToMovie(movieDetails);
   }
 }
