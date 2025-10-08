@@ -42,7 +42,7 @@ class SearchMovieDelegate extends SearchDelegate<Movie?> {
 
   @override
   List<Widget> buildActions(BuildContext context) {
-    return [
+    return <Widget>[
       StreamBuilder(
         initialData: false,
         stream: isLoadingStream.stream,
