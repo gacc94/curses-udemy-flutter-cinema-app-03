@@ -41,3 +41,29 @@ Run `dart run flutter_native_splash:create`.
 Run `dart run flutter_native_splash:create --path=path/to/my/file.yaml`.
 
 Change the app splash screen in the `android/app/src/main/res` directory.
+
+## Change app keystore
+
+Run `flutter build appbundle --release`.
+
+Run `flutter build appbundle --release --target=lib/main.dart`.
+
+Run `flutter build appbundle --release --target=lib/main.dart --split-debug-info=build/app/outputs/bundle/release/`.
+
+Run `flutter build appbundle --release --target=lib/main.dart --split-debug-info=build/app/outputs/bundle/release/ --no-tree-shake-icons`.
+
+Run `flutter build appbundle --release --target=lib/main.dart --split-debug-info=build/app/outputs/bundle/release/ --no-tree-shake-icons --no-tree-shake-icons`.
+
+## Change app version
+
+Change the app version in the `android/app/build.gradle` file.
+
+Change the app version in the `android/app/src/main/AndroidManifest.xml` file.
+
+Change the app version in the `pubspec.yaml` file.
+
+Change the app version in the `README.md` file.
+
+## Change app name
+
+Change the app name in the `android/app/src/main/AndroidManifest.xml` file.
