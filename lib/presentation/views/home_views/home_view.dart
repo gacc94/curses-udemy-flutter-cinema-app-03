@@ -5,6 +5,7 @@ import 'package:cinema_app_03/presentation/widgets/movies/movies_slide_show.dart
 import 'package:cinema_app_03/presentation/widgets/shared/custom_appbar.dart';
 import 'package:cinema_app_03/presentation/widgets/shared/full_screen_loader.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class HomeView extends ConsumerStatefulWidget {
@@ -34,6 +35,8 @@ class HomeViewState extends ConsumerState<HomeView> {
     final upcomingMovies = ref.watch(upcomingMoviesProvider);
     final topRatedMovies = ref.watch(topRatedMoviesProvider);
     final slides = ref.watch(moviesSlideShowProvider);
+
+    FlutterNativeSplash.remove();
 
     return Visibility(
       visible: !initialLoading,
